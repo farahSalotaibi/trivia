@@ -91,24 +91,143 @@ GET '/questions'
 - Fetches a all the questions in which the keys are the ids and the value is the corresponding string of the question, its answer, the diffculty and the category.
 - Request Arguments: None
 - Returns: All the questions, it's categories, total number of questions and the picked category if any.
+- Example
+Requested Path http://localhost:5000/questions
+{{
+      "success": True,
+      "questions": [{
+          "id": 5, 
+          "question": "Whose autobiography is entitled 'I Know Why the Caged Bird Sings'?",
+          "answer": "Maya Angelou",
+          "difficulty": 2,
+          "category": 4
+      },
+      {
+          "id": 9, 
+          "question": "What boxer's original name is Cassius Clay?",
+          "answer": "Muhammad Ali",
+          "difficulty": 1,
+          "category": 4   
+      },
+      {
+          "id": 2, 
+          "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?",
+          "answer": "Apollo 13",
+          "difficulty": 4,
+          "category": 5   
+      },
+      ],
+      "total_questions": 3,
+      "categories": {
+        "1": "science",
+        "2": "art",
+        "3": "geography",
+        "4": "history",
+        "5": "entertainment",
+        "6": "sports"
+    },
+      "current_category": null
+        }
 
+}
+GET '/categories/<int:id>/questions'
+- Fetches all the questions of a specific category based on the category id.
+- Request Arguments: The id of the category.
+- Returns: all the question of the asked category.
+- Example Requested Path http://localhost:5000/categories/1/questions
+{
+    "questions": [
+        {
+            "id": 20,
+            "question": "What is the heaviest organ in the human body?",  
+            "answer": "The Liver",
+            "category": 1,
+            "difficulty": 4
+
+        },
+        {
+            "id": 22,
+            "question": "Hematology is a branch of medicine involving the study of what?",
+            "answer": "Blood",
+            "category": 1,
+            "difficulty": 4
+
+        }
+    ],
+    "total_questions": 2,
+    "current_category": 1
+
+}
 DELETE '/questions/<int:id>'
 - Fetches the questions that with the matched Id and delete it
 - Request Arguments: The id of the question to be deleted
 - Returns: None
+- Example
+Requested Path http://localhost:5000/questions/2
+{
+    "success": true
+}
 
 POST '/questions'
 - Fetches the questions need to be added, check the filled fields
 - Fetches the search string check if it match any substring of the question stored in the database. 
 - Request Arguments: None
 - Returns: For searching (It returns all the question that match the search string)
+-Example 
+Requested Path http://localhost:5000/questions
+1) For adding question:
+{
+    "question": "What is mu name",
+    "answer": "farah",
+    "category": 3,
+    "difficulty": 1
+}
+The respond is:
+{
+    "success": true
+}
 
+2) For searching term
+{
+    "searchTerm": "palace"
+}
+The respond is:
+{
+    "questions": [
+        {   "id": 14,
+            "question": "In which royal palace would you find the Hall of Mirrors?",
+            "answer": "The Palace of Versailles",
+            "category": 3,
+            "difficulty": 3
+        }
+    ],
+    "total_questions": 1,
+    "current_category": null
+}
 POST '/quizzes'
 - Fetches the questions based on the category ID that the user chooses.
 - The question will be chosen at random and will keep track of the previous question to not duplicate.
 - Request Arguments: None
 - Returns: Questions of a specific category that does not duplicate.
-
+-Example 
+Requested Path http://localhost:5000/quizzes
+The request
+{
+    "quiz_category": {
+        "id": 2
+    },
+    "previous_questions": []
+}
+The respond
+{
+    "question": {
+        "answer": "Apollo 13",
+        "category": 5,
+        "difficulty": 4,
+        "id": 2,
+        "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
+    }
+}
 ```
 
 
